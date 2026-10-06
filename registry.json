@@ -1,0 +1,71 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "harv",
+  "homepage": "https://components.harv.computer",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Pressable with modifiers (contained, outline, modern, link, flat, raised) and utilities (tones, rounds, sizes, icons). Taxonomy from Integrity UI (my own prior work, rewritten); tones from harv semantic tokens.",
+      "files": [
+        {
+          "path": "registry/harv/button/button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "layer": "element"
+      },
+      "cssVars": {
+        "light": {
+          "--bg": "#fafaf8",
+          "--border": "rgb(0 0 0 / 0.1)",
+          "--duration-fast": "120ms",
+          "--ease-out": "cubic-bezier(0.22, 1, 0.36, 1)",
+          "--fg": "#101010",
+          "--radius-sm": "6px",
+          "--surface-2": "#f1f0ec"
+        },
+        "dark": {
+          "--bg": "#101010",
+          "--border": "rgb(255 255 255 / 0.09)",
+          "--duration-fast": "120ms",
+          "--ease-out": "cubic-bezier(0.22, 1, 0.36, 1)",
+          "--fg": "#f5f4f0",
+          "--radius-sm": "6px",
+          "--surface-2": "#1f1f1f"
+        }
+      }
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Small label for layer, status, and tags. From my site's badge, reduced to monotone.",
+      "files": [
+        {
+          "path": "registry/harv/badge/badge.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "layer": "element"
+      },
+      "cssVars": {
+        "light": {
+          "--bg": "#fafaf8",
+          "--border": "rgb(0 0 0 / 0.1)",
+          "--fg": "#101010",
+          "--surface-2": "#f1f0ec"
+        },
+        "dark": {
+          "--bg": "#101010",
+          "--border": "rgb(255 255 255 / 0.09)",
+          "--fg": "#f5f4f0",
+          "--surface-2": "#1f1f1f"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge",
+  "title": "Badge",
+  "description": "Small label for layer, status, and tags. From my site's badge, reduced to monotone.",
+  "files": [
+    {
+      "path": "registry/harv/badge/badge.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n// Small label for layers, statuses, and tags. From harv's badge, reduced\n// to monotone. This file exports only the component; docs data lives in\n// badge.entry.tsx so registry installs stay clean.\n\nexport type BadgeVariant = \"default\" | \"secondary\" | \"outline\";\n\nexport interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {\n  variant?: BadgeVariant;\n}\n\nexport function Badge({ variant = \"default\", className, ...props }: BadgeProps) {\n  return (\n    <>\n      <style>{`.badge{ display:inline-flex; align-items:center; gap:0.25rem; border-radius:999px; border:1px solid transparent; padding:0.15rem 0.6rem; font-size:0.72rem; font-weight:600; letter-spacing:0.01em; line-height:1.4; white-space:nowrap; }\n.badge--default{ background:var(--fg); color:var(--bg); }\n.badge--secondary{ background:var(--surface-2); color:var(--fg); }\n.badge--outline{ background:transparent; color:var(--fg); border-color:var(--border); }`}</style>\n      <span className={cn(\"badge\", `badge--${variant}`, className)} {...props} />\n    </>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "--bg": "#fafaf8",
+      "--border": "rgb(0 0 0 / 0.1)",
+      "--fg": "#101010",
+      "--surface-2": "#f1f0ec"
+    },
+    "dark": {
+      "--bg": "#101010",
+      "--border": "rgb(255 255 255 / 0.09)",
+      "--fg": "#f5f4f0",
+      "--surface-2": "#1f1f1f"
+    }
+  },
+  "meta": {
+    "layer": "element"
+  },
+  "type": "registry:ui"
+}
