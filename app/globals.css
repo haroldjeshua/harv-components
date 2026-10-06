@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter Display", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+
+  /* Monotone roles */
+  --color-base: #101010;
+  --color-paper: #171717;
+  --color-raised: #1f1f1f;
+  --color-ink: #f5f4f0;
+  --color-muted: #a1a1a1;
+  --color-faint: #6b6b6b;
+  --color-line: rgb(255 255 255 / 0.09);
+  --color-accent: #f5f4f0;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --spacing-tile: 1.5rem;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 120ms;
+  --duration-med: 200ms;
+}
+
+:root {
+  --bg: #fafaf8;
+  --surface: #ffffff;
+  --surface-2: #f1f0ec;
+  --fg: #101010;
+  --fg-muted: #5c5c5c;
+  --fg-faint: #8a8a8a;
+  --border: rgb(0 0 0 / 0.1);
+  --accent-fg: #101010;
+  --status-ready: #2f8a4d;
+}
+
+.dark {
+  --bg: #101010;
+  --surface: #171717;
+  --surface-2: #1f1f1f;
+  --fg: #f5f4f0;
+  --fg-muted: #a1a1a1;
+  --fg-faint: #6b6b6b;
+  --border: rgb(255 255 255 / 0.09);
+  --accent-fg: #f5f4f0;
+  --status-ready: #5cb87f;
+}
+
+:root {
+  --sh-keyword: #7a3fa0;
+  --sh-identifier: #8a6d1c;
+  --sh-sign: #5c5c5c;
+  --sh-string: #2f7a3d;
+  --sh-class: #8a6d1c;
+  --sh-comment: #8a8a8a;
+  --sh-jsxliterals: #1f6f7a;
+  --sh-property: #1f6f7a;
+  --sh-entity: #1f6f7a;
+}
+
+.dark {
+  --sh-keyword: #c678dd;
+  --sh-identifier: #e5c07b;
+  --sh-sign: #abb2bf;
+  --sh-string: #98c379;
+  --sh-class: #e5c07b;
+  --sh-comment: #636d83;
+  --sh-jsxliterals: #56b6c2;
+  --sh-property: #56b6c2;
+  --sh-entity: #56b6c2;
+}
+
+/* sugar-high token colors. sugar-high separates lines with newline text
+   nodes inside <pre>, so lines must NOT also be display:block. */
+.sh__token--keyword { color: var(--sh-keyword); }
+.sh__token--identifier { color: var(--sh-identifier); }
+.sh__token--sign { color: var(--sh-sign); }
+.sh__token--string { color: var(--sh-string); }
+.sh__token--class { color: var(--sh-class); }
+.sh__token--comment { color: var(--sh-comment); }
+.sh__token--jsxliterals { color: var(--sh-jsxliterals); }
+.sh__token--property { color: var(--sh-property); }
+.sh__token--entity { color: var(--sh-entity); }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
