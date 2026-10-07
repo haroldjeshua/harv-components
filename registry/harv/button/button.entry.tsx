@@ -1,6 +1,6 @@
 import { validateEntryMeta } from "@/lib/entry-schema";
 import type { EntryData } from "@/lib/entry-types";
-import { Button } from "./button";
+import { ButtonHero } from "./hero";
 import ButtonModifiersExample, { meta as modifiersMeta } from "./examples/button-modifiers.example";
 import ButtonTonesExample, { meta as tonesMeta } from "./examples/button-tones.example";
 import ButtonSizesExample, { meta as sizesMeta } from "./examples/button-sizes.example";
@@ -26,7 +26,7 @@ export const buttonEntry: EntryData = {
   }),
   sourceFile: "registry/harv/button/button.tsx",
   usage: `import { Button } from "@/registry/harv/button/button"\n\n<Button tone="danger" variant="outline">Delete</Button>`,
-  hero: () => <Button>Button</Button>,
+  hero: ButtonHero,
   api: [
     { prop: "variant", type: `"default" | "secondary" | "outline" | "modern" | "ghost" | "flat" | "raised" | "link"`, default: `"default"`, description: "Visual modifier. Contained by default; modern is a soft tonal fill; raised adds elevation." },
     { prop: "tone", type: `"default" | "danger" | "warning" | "info" | "success"`, default: `"default"`, description: "Semantic tone. Composes with contained, outline, and modern variants." },

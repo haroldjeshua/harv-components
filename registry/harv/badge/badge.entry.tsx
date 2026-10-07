@@ -1,6 +1,6 @@
 import { validateEntryMeta } from "@/lib/entry-schema";
 import type { EntryData } from "@/lib/entry-types";
-import { Badge } from "./badge";
+import { BadgeHero } from "./hero";
 import BadgeVariantsExample, { meta as variantsMeta } from "./examples/badge-variants.example";
 import BadgeStatusExample, { meta as statusMeta } from "./examples/badge-status.example";
 
@@ -23,7 +23,7 @@ export const badgeEntry: EntryData = {
   }),
   sourceFile: "registry/harv/badge/badge.tsx",
   usage: `import { Badge } from "@/registry/harv/badge/badge"\n\n<Badge variant="secondary">stable</Badge>`,
-  hero: () => <Badge>Badge</Badge>,
+  hero: BadgeHero,
   api: [
     { prop: "variant", type: `"default" | "secondary" | "outline"`, default: `"default"`, description: "Visual treatment. Default is inverted; secondary is tonal; outline is bordered." },
   ],

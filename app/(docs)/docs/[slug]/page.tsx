@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getAllEntries, getEntry, getSourceFile, getRegistryItem } from "@/lib/entries";
+import { getAllEntries, getDocsOrder, getEntry, getSourceFile, getRegistryItem } from "@/lib/entries";
 import { getEntryData } from "@/lib/entry-data";
 import { highlightCode } from "@/lib/highlight";
+import { resolveTemporalState } from "@/registry/harv/temporal-theme/temporal-theme";
 import type { ApiRow } from "@/lib/entry-types";
 import type { EntryPanelData } from "@/components/entry-panel";
 import { EntryPanel, ExampleBlock } from "@/components/entry-panel";
@@ -69,14 +70,19 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
   if (!entry) notFound();
   const data = getEntryData(slug);
 
-  const all = getAllEntries();
+  const all = getDocsOrder();
   const index = all.findIndex((e) => e.slug === slug);
   const prev = index > 0 ? all[index - 1] : undefined;
   const next = index >= 0 && index < all.length - 1 ? all[index + 1] : undefined;
 
   const outline: [string, string][] = [["#preview", "Preview"]];
   if (data && data.examples.length > 0) outline.push(["#examples", "Examples"]);
+  if (data?.pageContent) outline.push(["#document", "Document"]);
+  if (data?.anatomy && data.anatomy.length > 0) outline.push(["#anatomy", "Anatomy"]);
+  if (data?.hostRequirements && data.hostRequirements.length > 0) outline.push(["#host", "Host requirements"]);
   if (data && data.api.length > 0) outline.push(["#api", "API reference"]);
+  if (data?.gotchas && data.gotchas.length > 0) outline.push(["#gotchas", "Gotchas"]);
+  if (data?.credits && data.credits.length > 0) outline.push(["#credits", "Credits"]);
   if (data && data.changelog.length > 0) outline.push(["#changelog", "Changelog"]);
 
   // Panel data is derived server-side: install commands from the registry
@@ -96,6 +102,14 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
     ];
     const sourceCode = getSourceFile(data.sourceFile);
     const usageHtml = highlightCode(data.usage);
+    // Code tabs come from the registry item's file list so multi-file items
+    // show every shipped file; falls back to the entry's source file.
+    const panelFiles = (item?.files ?? []).length > 0
+      ? item!.files.map((f) => {
+          const code = getSourceFile(f.path);
+          return { path: f.path, code, html: highlightCode(code) };
+        })
+      : [{ path: data.sourceFile, code: sourceCode, html: highlightCode(sourceCode) }];
     const prompt = [
       `Add the "${entry.name}" ${entry.layer} to my project.`,
       ``,
@@ -119,14 +133,29 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
       installCommands,
       installNote:
         "First command installs from this registry by URL. The @harv form needs { registries: { \"@harv\": \"https://components.harv.computer/r/{name}.json\" } } in components.json. Manual path: copy the file(s) below and install the listed dependencies.",
+      installSteps: data.installSteps,
       usage: data.usage,
       usageHtml,
-      files: [{ path: data.sourceFile, code: sourceCode, html: highlightCode(sourceCode) }],
+      files: panelFiles,
       howItWorks: data.howItWorks,
+      phaseTable: data.phaseTableTimes?.map((time) => {
+        const [h, m] = time.split(":").map(Number);
+        const state = resolveTemporalState(new Date(2026, 8, 29, h, m));
+        return {
+          time,
+          phase: state.phase,
+          scheme: state.scheme,
+          temperature: state.temperature,
+          atmosphere: state.atmosphereIntensity.toFixed(2),
+        };
+      }),
       prompt,
     };
   }
-  const Hero = data?.hero ?? data?.examples[0]?.Component;
+  // Panel heroes are explicit per entry. Never fall back to examples[0]:
+  // that mounted the same interactive component twice (two fixed rails
+  // on system pages). Entries without a hero get a pointer to Examples.
+  const Hero = data?.hero ?? null;
 
   return (
     <div className="grid grid-cols-1 gap-10 xl:grid-cols-[minmax(0,1fr)_12rem]">
@@ -145,12 +174,43 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
         <p className="mt-3 text-xs" style={{ fontFamily: "var(--font-mono)", color: "var(--fg-faint)" }}>
           {entry.origin} · used in {entry.usedIn.join(", ")} · {entry.deps.length ? entry.deps.join(", ") : "no dependencies"}
         </p>
+        {data && data.related && data.related.length > 0 && (
+          <p className="mt-2 text-xs" style={{ color: "var(--fg-faint)" }}>
+            Related:{" "}
+            {data.related.map((rel, i) => {
+              const target = getEntry(rel);
+              return (
+                <span key={rel}>
+                  {i > 0 && ", "}
+                  {target ? (
+                    <Link href={`/docs/${rel}`} className="underline underline-offset-4 hover:opacity-70" style={{ color: "var(--fg-muted)" }}>
+                      {target.name}
+                    </Link>
+                  ) : (
+                    rel
+                  )}
+                </span>
+              );
+            })}
+          </p>
+        )}
       </header>
 
-      {panel && Hero ? (
+      {panel ? (
         <>
           <section id="preview" aria-label="Live preview" className="mt-8 scroll-mt-20">
-            <EntryPanel data={panel} hero={<Hero />} />
+            <EntryPanel
+              data={panel}
+              hero={
+                Hero ? (
+                  <Hero />
+                ) : (
+                  <p className="text-sm" style={{ color: "var(--fg-muted)" }}>
+                    Previews live in the <a href="#examples" className="underline underline-offset-4">Examples</a> below.
+                  </p>
+                )
+              }
+            />
           </section>
           {data && data.examples.length > 0 && (
             <section id="examples" aria-label="Examples" className="mt-10 scroll-mt-20">
@@ -162,6 +222,7 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
                     <ExampleBlock
                       key={ex.id}
                       title={ex.title}
+                      caption={ex.caption}
                       preview={<ex.Component />}
                       code={code}
                       html={highlightCode(code)}
@@ -171,10 +232,47 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
               </div>
             </section>
           )}
+          {data?.demoHref && (
+            <p className="mt-6 text-sm">
+              <Link href={data.demoHref} className="underline underline-offset-4 hover:opacity-70" style={{ color: "var(--fg)" }}>
+                Open the full-page demo →
+              </Link>
+            </p>
+          )}
+          {data?.pageContent && (
+            <section id="document" aria-label="Document demo" className="mt-10 scroll-mt-20">
+              <data.pageContent />
+            </section>
+          )}
         </>
       ) : (
         <section id="preview" aria-label="Live preview" className="mt-8 scroll-mt-20">
           <Preview slug={slug} />
+        </section>
+      )}
+
+      {data?.anatomy && data.anatomy.length > 0 && (
+        <section id="anatomy" aria-label="Anatomy" className="mt-10 scroll-mt-20">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-widest" style={{ color: "var(--fg-faint)" }}>Anatomy</h2>
+          <dl className="flex flex-col gap-2">
+            {data.anatomy.map((a) => (
+              <div key={a.part} className="flex flex-col gap-0.5 rounded-md px-4 py-2.5 text-sm sm:flex-row sm:gap-4" style={{ border: "1px solid var(--border)" }}>
+                <dt className="shrink-0 font-medium sm:w-48" style={{ fontFamily: "var(--font-mono)", fontSize: "0.8rem" }}>{a.part}</dt>
+                <dd style={{ color: "var(--fg-muted)" }}>{a.mounts}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
+
+      {data?.hostRequirements && data.hostRequirements.length > 0 && (
+        <section id="host" aria-label="Host requirements" className="mt-10 scroll-mt-20">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-widest" style={{ color: "var(--fg-faint)" }}>Host requirements</h2>
+          <ul className="flex list-disc flex-col gap-1.5 pl-5 text-sm leading-relaxed" style={{ color: "var(--fg-muted)" }}>
+            {data.hostRequirements.map((req) => (
+              <li key={req}>{req}</li>
+            ))}
+          </ul>
         </section>
       )}
 
@@ -230,6 +328,17 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
         </section>
       )}
 
+      {data?.gotchas && data.gotchas.length > 0 && (
+        <section id="gotchas" aria-label="Gotchas" className="mt-10 scroll-mt-20">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-widest" style={{ color: "var(--fg-faint)" }}>Gotchas</h2>
+          <ul className="flex list-disc flex-col gap-1.5 pl-5 text-sm leading-relaxed" style={{ color: "var(--fg-muted)" }}>
+            {data.gotchas.map((gotcha) => (
+              <li key={gotcha}>{gotcha}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <p className="mt-10 text-xs" style={{ color: "var(--fg-faint)" }}>
         Previews on this page render from the entry&apos;s own source file
         {data ? (
@@ -239,6 +348,22 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
         )}
         . No demo copies.
       </p>
+
+      {data?.credits && data.credits.length > 0 && (
+        <section id="credits" aria-label="Credits" className="mt-10 scroll-mt-20">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-widest" style={{ color: "var(--fg-faint)" }}>Credits</h2>
+          <ul className="flex list-none flex-col gap-2 p-0 text-sm leading-relaxed" style={{ color: "var(--fg-muted)" }}>
+            {data.credits.map((credit) => (
+              <li key={credit.name}>
+                <a href={credit.href} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:opacity-70" style={{ color: "var(--fg)" }}>
+                  {credit.name}
+                </a>
+                {" — "}{credit.note}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <nav aria-label="More entries" className="mt-8 flex items-center justify-between gap-4" style={{ borderTop: "1px solid var(--border)", paddingTop: "1.5rem" }}>
         <div className="min-w-0">

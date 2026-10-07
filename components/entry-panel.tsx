@@ -13,13 +13,25 @@ export interface PanelCodeFile {
   html: string;
 }
 
+export interface PhaseTableRow {
+  time: string;
+  phase: string;
+  scheme: string;
+  temperature: string;
+  atmosphere: string;
+}
+
 export interface EntryPanelData {
   installCommands: string[];
   installNote: string;
+  /** Ordered wire-up steps rendered above the commands. */
+  installSteps?: string[];
   usage: string;
   usageHtml: string;
   files: PanelCodeFile[];
   howItWorks: string;
+  /** Server-rendered phase table appended to How it works. */
+  phaseTable?: PhaseTableRow[];
   prompt: string;
 }
 
@@ -145,6 +157,13 @@ export function EntryPanel({ data, hero }: { data: EntryPanelData; hero: React.R
         <div>
           <Disclosure id="panel-install" title="Install" copyText={data.installCommands.join("\n")} {...section("install")}>
             <div className="flex flex-col gap-2">
+              {data.installSteps && data.installSteps.length > 0 && (
+                <ol className="flex list-decimal flex-col gap-2 pl-5 text-sm leading-relaxed" style={{ color: "var(--fg)" }}>
+                  {data.installSteps.map((step) => (
+                    <li key={step}>{step}</li>
+                  ))}
+                </ol>
+              )}
               {data.installCommands.map((cmd) => (
                 <pre key={cmd} className="overflow-x-auto px-3 py-2.5 text-[13px]" style={{ fontFamily: "var(--font-mono)", background: "var(--bg)", borderRadius: "var(--radius-sm)" }}>
                   <code>{cmd}</code>
@@ -198,6 +217,30 @@ export function EntryPanel({ data, hero }: { data: EntryPanelData; hero: React.R
               <p className="max-w-prose text-sm leading-relaxed" style={{ color: "var(--fg-muted)" }}>
                 {data.howItWorks}
               </p>
+              {data.phaseTable && data.phaseTable.length > 0 && (
+                <div className="mt-3 overflow-x-auto" style={{ border: "1px solid var(--border)", borderRadius: "var(--radius-sm)" }}>
+                  <table className="w-full min-w-[480px] border-collapse text-left text-sm">
+                    <thead>
+                      <tr style={{ borderBottom: "1px solid var(--border)", color: "var(--fg-faint)" }}>
+                        {["Time", "Phase", "Scheme", "Tone", "Atmosphere"].map((h) => (
+                          <th key={h} className="px-3 py-2 text-xs font-semibold uppercase tracking-widest">{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.phaseTable.map((row) => (
+                        <tr key={row.time} style={{ borderBottom: "1px solid var(--border)" }}>
+                          <td className="px-3 py-1.5" style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem" }}>{row.time}</td>
+                          <td className="px-3 py-1.5">{row.phase}</td>
+                          <td className="px-3 py-1.5" style={{ color: "var(--fg-muted)" }}>{row.scheme}</td>
+                          <td className="px-3 py-1.5" style={{ color: "var(--fg-muted)" }}>{row.temperature}</td>
+                          <td className="px-3 py-1.5" style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--fg-muted)" }}>{row.atmosphere}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </Disclosure>
           </div>
         </div>
@@ -207,7 +250,7 @@ export function EntryPanel({ data, hero }: { data: EntryPanelData; hero: React.R
 }
 
 /** Lighter example block: titled live preview with a Preview/Code tab toggle. */
-export function ExampleBlock({ title, preview, code, html }: { title: string; preview: React.ReactNode; code: string; html: string }) {
+export function ExampleBlock({ title, caption, preview, code, html }: { title: string; caption?: string; preview: React.ReactNode; code: string; html: string }) {
   const [mode, setMode] = React.useState<"preview" | "code">("preview");
   const groupRef = React.useRef<HTMLDivElement>(null);
 
@@ -244,7 +287,12 @@ export function ExampleBlock({ title, preview, code, html }: { title: string; pr
   return (
     <section aria-label={title} className="overflow-hidden" style={{ border: "1px solid var(--border)", borderRadius: "var(--radius-md)", background: "var(--surface)" }}>
       <div className="flex items-center justify-between gap-3 px-4 py-2.5" style={{ borderBottom: "1px solid var(--border)" }}>
-        <h3 className="text-sm font-semibold">{title}</h3>
+        <div className="flex min-w-0 flex-col gap-0.5">
+          <h3 className="truncate text-sm font-semibold">{title}</h3>
+          {caption && (
+            <p className="truncate font-mono text-[11px]" style={{ color: "var(--fg-faint)" }}>{caption}</p>
+          )}
+        </div>
         <div
           ref={groupRef}
           role="radiogroup"
