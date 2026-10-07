@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import AgentationWrapper from "@/components/agentation";
+import { Analytics } from "@vercel/analytics/react";
 import { getAllEntries } from "@/lib/entries";
 import "./globals.css";
 
@@ -31,8 +32,20 @@ const fontDisplay = localFont({
 const fontMono = FontMono({ subsets: ["latin"], display: "swap", variable: "--font-mono" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://components.harv.computer"),
   title: { default: "harv components", template: "%s · harv components" },
   description: "A small personal archive of elements, components, and patterns I actually use.",
+  openGraph: {
+    title: "harv components",
+    description: "A small personal archive of elements, components, and patterns I actually use.",
+    siteName: "harv components",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "harv components",
+    description: "A small personal archive of elements, components, and patterns I actually use.",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -53,6 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <SiteFooter />
         </ThemeProvider>
         <AgentationWrapper />
+        <Analytics />
       </body>
     </html>
   );
