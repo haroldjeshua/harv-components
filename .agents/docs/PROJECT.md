@@ -22,15 +22,15 @@ A small, deployed, personal archive of the elements, components, and patterns I 
 |---|---|---|
 | **A. harv components** | Small personal archive, deployed | **Chosen.** Viable scope, ships, solves a real recurring need |
 | B. OEI | Large shadcn-registry-style block library | Parked. Needs a scale of components, docs, and maintenance I can't commit to now. Only the homepage exists ("Currently building...") |
-| C. Integrity UI revival | Full design system from a previous company | Not revived as a product. Mined for ideas (see §6) |
+| C. Prior system revival | Full design system from a previous company | Not revived as a product. Mined for ideas (see §6) |
 
-**Why A wins:** it is the only option where "done and deployed" is realistic. OEI and Integrity UI both fail the same test: they are *products* that need completeness to be credible, while an *archive* is useful at 5 entries.
+**Why A wins:** it is the only option where "done and deployed" is realistic. OEI and that earlier system both fail the same test: they are *products* that need completeness to be credible, while an *archive* is useful at 5 entries.
 
 **What happens to the other two**
 - **OEI:** archive the project. Its taxonomy and "extensive" ambition are absorbed here (§6). The name/domain can be reused later if a public registry layer ever earns its place. Optionally redirect `oei.vercel.app` to the new site once live.
-- **Integrity UI:** leave online as a historical reference. Do not continue it as a standalone system. Rebuild the good ideas fresh here.
+- **That earlier system:** leave online as a historical reference. Do not continue it as a standalone system. Rebuild the good ideas fresh here.
 
-> **Ownership check (important):** Integrity UI was made for a previous company and carries IntegrityNet branding. Before reusing any actual code, assets, or copy, confirm I'm free to. Safest approach: reuse the *ideas and structure*, rewrite everything from scratch, drop all company branding and wording.
+> **Ownership check (important):** That system was made for a previous company and carries its branding. Before reusing any actual code, assets, or copy, confirm I'm free to. Safest approach: reuse the *ideas and structure*, rewrite everything from scratch, drop all company branding and wording.
 
 ## 4. Principles (PHILOSOPHY)
 
@@ -65,7 +65,7 @@ A small, deployed, personal archive of the elements, components, and patterns I 
 - A `blocks` / `templates` layer (the OEI ambition)
 - Entries contributed from civic-tech work (e.g. Filipino-context patterns)
 
-## 6. Ideas ingested from OEI, Integrity UI, and Bencho
+## 6. Ideas ingested from OEI, a past system, and Bencho
 
 ### From OEI (what I built: oei.vercel.app)
 - **Taxonomy ambition.** The OEI homepage lists: extensive components, animated, decorative, blocks, templates, utilities, tools, resources, design guide. Too many for v1, so collapse into a shortlist:
@@ -75,7 +75,7 @@ A small, deployed, personal archive of the elements, components, and patterns I 
 - **"Resources" and "design guide"** become the Foundations page.
 - **Visual identity cues** worth keeping: dark-first (`#101010`), minimal chrome, ✲ mark, theme toggle, restrained typographic homepage.
 
-### From Integrity UI (what I built: integrity-ui.netlify.app)
+### From a design system I worked on years ago
 - **Information architecture:** What's New · Design · Components · Docs. Reuse as: Changelog · Foundations · Gallery · About/Usage.
 - **Contents of a real design system**, reduced to what a solo archive needs:
   - Design principles → my §4
@@ -84,7 +84,7 @@ A small, deployed, personal archive of the elements, components, and patterns I 
   - UX guidelines / templates and flows → stretch
 - **"Shared vocabulary" and "useful reference"** as the core benefits: naming consistency inside my own work.
 - **"Visual language is part of development standards"**: tokens drive both Figma and code so the twins don't drift.
-- **Leave behind:** corporate framing, IntegrityNet branding, benefit-list marketing copy.
+- **Leave behind:** corporate framing, company branding, benefit-list marketing copy.
 
 ### From Bencho (bencho.dev): inspiration, not imitation
 What Bencho does well, as a lesson:
@@ -114,7 +114,7 @@ What I will **not** copy:
 /                    Gallery (filter by layer / tag)
 /docs/[slug]        Entry page (registry source at registry/harv/[slug]/)
 /foundations         Tokens, type, color, motion, principles
-/changelog           What's new (from Integrity's "What's New")
+/changelog           What's new (from that system's "What's New")
 /about               What this is, how I use it
 ```
 
@@ -171,7 +171,7 @@ Not needed for v1: Drizzle, Neon, TanStack Query.
 
 **Phase 3: Polish and ship**
 - Search/filter, changelog, about page, OG images
-- Redirect or archive OEI; decide Integrity UI's fate (leave as-is)
+- Redirect or archive OEI; decide that system's fate (leave as-is)
 - Exit: public launch, announce quietly
 
 **Phase 4 (stretch, optional):** blocks layer.
@@ -196,7 +196,7 @@ Not needed for v1: Drizzle, Neon, TanStack Query.
 | Scope creeps back toward OEI-size ambition | Earned-entries rule; v1 capped at ~12 |
 | Spending time on the site instead of the components | Phase 0 is timeboxed; shell stays plain |
 | Looks like a Bencho clone | Layer/provenance IA, Figma twins, own visual identity |
-| Reusing company IP from Integrity UI | Rewrite, don't copy; remove branding; confirm rights |
+| Reusing company IP from that system | Rewrite, don't copy; remove branding; confirm rights |
 | Entries rot as projects evolve | `status` field and changelog; deprecate rather than delete |
 | Abandonment like OEI | Small scope, deployed early, useful to me even unfinished |
 
@@ -215,4 +215,4 @@ Not needed for v1: Drizzle, Neon, TanStack Query.
 - Keep dependencies minimal; justify any new package.
 - Strict TypeScript; Tailwind v4 tokens via `@theme`; no hard-coded colors outside tokens.
 - Do not mimic bencho.dev's layout, copy, naming, or interactions.
-- Do not import code or branding from Integrity UI without my explicit go-ahead.
+- Do not import code or branding from that system without my explicit go-ahead.

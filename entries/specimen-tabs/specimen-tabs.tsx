@@ -4,7 +4,7 @@ import * as React from "react";
 import { CopyButton } from "@/components/copy-button";
 
 // Tabbed specimen: one page, category tabs hide/show sections without a
-// route change. Idea studied from Integrity UI's single-page components index;
+// route change. Idea studied from a design system I worked on years ago;
 // rewritten here as an accessible tablist in this archive's monotone voice.
 //
 // Code HTML is pre-highlighted at build time by the page (server) and passed

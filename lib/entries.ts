@@ -21,7 +21,7 @@ const rawMetas: Record<string, unknown>[] = [
     figma: null,
     deps: ["next-themes"],
     added: "2026-10-06",
-    description: "Light/dark switch used in this site's header. Restrained: a single button, no menu.",
+    description: "Light/dark switch for the site header.",
   },
   {
     slug: "specimen-tabs",
@@ -34,7 +34,7 @@ const rawMetas: Record<string, unknown>[] = [
     figma: null,
     deps: [],
     added: "2026-10-07",
-    description: "Single-page category tabs that hide/show sections without a route change. Idea studied from Integrity UI's components index; rewritten as an accessible tablist.",
+    description: "Category tabs that hide and show sections without a route change.",
   },
   {
     slug: "work-grid",
@@ -47,7 +47,7 @@ const rawMetas: Record<string, unknown>[] = [
     figma: null,
     deps: [],
     added: "2026-10-07",
-    description: "Folder-like category index from /work. Tiles lift on hover; icons are slots.",
+    description: "Folder-like category index from /work.",
   },
   {
     slug: "lab-index",
@@ -60,7 +60,7 @@ const rawMetas: Record<string, unknown>[] = [
     figma: null,
     deps: [],
     added: "2026-10-07",
-    description: "Workbench feature cards plus archive grid plus a next-up placeholder, from /labs.",
+    description: "Workbench cards plus archive grid, from /labs.",
   },
   {
     slug: "craft-masonry",
@@ -73,7 +73,7 @@ const rawMetas: Record<string, unknown>[] = [
     figma: null,
     deps: [],
     added: "2026-10-07",
-    description: "CSS-columns masonry with hover captions and motion-safe reveal, from /crafts.",
+    description: "CSS-columns masonry with hover captions, from /crafts.",
   },
   {
     slug: "media-bento",
@@ -86,7 +86,7 @@ const rawMetas: Record<string, unknown>[] = [
     figma: null,
     deps: [],
     added: "2026-10-07",
-    description: "Static 3-column bento with featured spans, from /media. The dynamic grid-generator variant is a deferred future feature.",
+    description: "Static 3-column bento with featured spans, from /media.",
   },
   {
     slug: "media-strip",
@@ -99,7 +99,7 @@ const rawMetas: Record<string, unknown>[] = [
     figma: null,
     deps: [],
     added: "2026-10-07",
-    description: "Horizontal row of opaque cards with a trailing More tile, from the homepage media section.",
+    description: "Horizontal row of opaque cards with a More tile, from home.",
   },
   {
     slug: "source-panel",
@@ -112,7 +112,7 @@ const rawMetas: Record<string, unknown>[] = [
     figma: null,
     deps: ["sugar-high"],
     added: "2026-10-06",
-    description: "Code display with copy button. Same highlighter my site uses (sugar-high), monotone styling.",
+    description: "Code display with copy button.",
   },
 ];
 

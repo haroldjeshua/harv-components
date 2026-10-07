@@ -19,7 +19,7 @@ export const badgeEntry: EntryData = {
     figma: null,
     deps: [],
     added: "2026-10-06",
-    description: "Small label for layer, status, and tags. From my site's badge, reduced to monotone.",
+    description: "Small label for layers, statuses, and tags.",
   }),
   sourceFile: "registry/harv/badge/badge.tsx",
   usage: `import { Badge } from "@/registry/harv/badge/badge"\n\n<Badge variant="secondary">stable</Badge>`,

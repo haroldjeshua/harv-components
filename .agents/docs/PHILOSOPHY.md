@@ -9,7 +9,7 @@
 
 **A personal archive compounds. A product has to be complete.**
 
-OEI and Integrity UI both tried to be products: they needed breadth before they were credible. harv components only has to be *useful to me at 5 entries*. Every decision below follows from that difference.
+OEI and that earlier system both tried to be products: they needed breadth before they were credible. harv components only has to be *useful to me at 5 entries*. Every decision below follows from that difference.
 
 My Figma file already proves it. A past frame, reused, made a recent landing page fast and easy. This project is the same effect for code.
 
@@ -60,7 +60,7 @@ It should look and feel like my work, not a generic docs template. Humble entrie
 | Source | What it taught me | What I carry | What I leave |
 |---|---|---|---|
 | **OEI** | Ambition without scope doesn't ship | Layers, dark-first feel, theme toggle | The block/template library ambition (for now) |
-| **Integrity UI** | A real system has principles, tokens, and shared vocabulary | The structure of foundations and naming | Corporate framing, branding, any code I don't own |
+| **A past system** | A real system has principles, tokens, and shared vocabulary | The structure of foundations and naming | Corporate framing, branding, any code I don't own |
 | **Bencho** (inspiration only) | Live, interactive entries make a library feel alive | The standard of craft and the "live, not mocked" bar | Their structure, naming, interactions, and styling |
 
 **On inspiration vs. copying:** I may learn *why* something works. I may not reproduce *what* it is. If I can't explain how my version differs in purpose and structure, it isn't ready.
@@ -86,7 +86,7 @@ When something isn't covered, apply these in order:
 - Treating the site as the product instead of the archive
 - Starting phase N+1 before phase N's exit criteria are met
 - Letting Figma and code tokens drift apart "temporarily"
-- Reusing Integrity UI code or branding without confirming I'm free to
+- Reusing that system's code or branding without confirming I'm free to
 
 ## 6. Tone and visual direction
 

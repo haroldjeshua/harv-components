@@ -2,11 +2,12 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 // Button system, rewritten for this archive.
-// Taxonomy studied from Integrity UI (my own prior work, reused with my
-// approval): modifiers (contained / outline / modern / link / flat+raised /
-// icons) and utilities (tones / rounds / sizes). Dropped: Integrity's brand
-// red, class names, and unfinished specials (toggle, multiselect, split,
-// FAB, mobile) — those ship only if a real project needs them.
+// Taxonomy studied from a design system I worked on years ago (my own prior
+// work, reused with my approval): modifiers (contained / outline / modern /
+// link / flat+raised / icons) and utilities (tones / rounds / sizes).
+// Dropped: that system's brand color, class names, and unfinished specials
+// (toggle, multiselect, split, FAB, mobile) — those ship only if a real
+// project needs them.
 // Alert tones reuse harv (personal site) semantic hues; everything else is
 // monotone.
 //

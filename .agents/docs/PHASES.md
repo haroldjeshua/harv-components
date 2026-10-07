@@ -78,7 +78,7 @@
 - Foundations page reflects what the code actually uses
 
 ### Guardrails
-- Pull Integrity UI's *ideas* (principles, tokens, shared vocabulary), not its code or branding.
+- Pull that system's *ideas* (principles, tokens, shared vocabulary), not its code or branding.
 - If tokens drift between Figma and code, fix it before moving on.
 
 ---
@@ -96,7 +96,7 @@
 - [ ] Performance pass: live previews shouldn't tank the gallery
 - [ ] Decide OEI's fate: archive, and optionally redirect `oei.vercel.app`
 - [ ] Decide source license and add it
-- [ ] Leave Integrity UI online as historical reference
+- [ ] Leave that system online as historical reference
 - [ ] Quiet public announcement
 
 ### Exit criteria
@@ -121,7 +121,7 @@
 
 Only after Phase 3 is live and I've used the archive on at least one new project.
 
-- [ ] Templates and UX flows (from Integrity's patterns/flows idea)
+- [ ] Templates and UX flows (from that system's patterns/flows idea)
 - [ ] Filipino/civic patterns as a collection or tag (resolve `PROJECT.md` §12 Q3)
 - [ ] Revisit whether OEI's name returns for a registry layer
 
@@ -166,4 +166,4 @@ Each item needs its own mini-brief and must still pass *earned entries*.
 - Strict TypeScript; tokens via Tailwind v4 `@theme`; no hard-coded colors outside tokens.
 - If a task seems to need something from a later phase, stop and ask.
 - Never imitate bencho.dev's layout, copy, naming, or interactions.
-- Never import code or branding from Integrity UI without my explicit approval.
+- Never import code or branding from a design system I worked on years ago without my explicit approval.

@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "badge",
   "title": "Badge",
-  "description": "Small label for layer, status, and tags. From my site's badge, reduced to monotone.",
+  "description": "Small label for layers, statuses, and tags.",
   "files": [
     {
       "path": "registry/harv/badge/badge.tsx",

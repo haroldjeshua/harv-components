@@ -22,7 +22,7 @@ export const buttonEntry: EntryData = {
     deps: [],
     added: "2026-10-06",
     description:
-      "Pressable with modifiers (contained, outline, modern, link, flat, raised) and utilities (tones, rounds, sizes, icons). Taxonomy from Integrity UI (my own prior work, rewritten); tones from harv semantic tokens.",
+      "The basic pressable, with modifiers, alert tones, and sizes.",
   }),
   sourceFile: "registry/harv/button/button.tsx",
   usage: `import { Button } from "@/registry/harv/button/button"\n\n<Button tone="danger" variant="outline">Delete</Button>`,
