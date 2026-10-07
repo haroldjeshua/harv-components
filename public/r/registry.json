@@ -66,6 +66,65 @@
           "--surface-2": "#1f1f1f"
         }
       }
+    },
+    {
+      "name": "temporal-theme",
+      "type": "registry:component",
+      "title": "Temporal theme",
+      "description": "Daylight-following theme: clock in, scheme and warmth out.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "popover"
+      ],
+      "files": [
+        {
+          "path": "registry/harv/temporal-theme/temporal-theme.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/harv/temporal-theme/temporal-toggle.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/harv/temporal-theme/temporal-theme.css",
+          "type": "registry:component"
+        }
+      ],
+      "meta": {
+        "layer": "system"
+      },
+      "cssVars": {
+        "light": {},
+        "dark": {}
+      }
+    },
+    {
+      "name": "proximity-navigation",
+      "type": "registry:component",
+      "title": "Proximity navigation",
+      "description": "Scroll-synced rail for long pages. Marks swell near you.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/harv/proximity-navigation/proximity-math.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/harv/proximity-navigation/proximity-rail.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "meta": {
+        "layer": "system"
+      },
+      "cssVars": {
+        "light": {},
+        "dark": {}
+      }
     }
   ]
 }

@@ -3,12 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { EntryMeta } from "@/lib/entry-schema";
+import { ENTRY_LAYER_ORDER } from "@/lib/entry-schema";
 
-const LAYERS = [
-  { id: "element", label: "Elements" },
-  { id: "component", label: "Components" },
-  { id: "pattern", label: "Patterns" },
-] as const;
+const LAYER_LABELS: Record<(typeof ENTRY_LAYER_ORDER)[number], string> = {
+  element: "Elements",
+  component: "Components",
+  pattern: "Patterns",
+  system: "Systems",
+};
+
+// Single source of truth: same layer sequence as prev/next navigation.
+const LAYERS = ENTRY_LAYER_ORDER.map((id) => ({ id, label: LAYER_LABELS[id] }));
 
 export function SiteSidebar({ entries, readySlugs = [] }: { entries: EntryMeta[]; readySlugs?: string[] }) {
   const pathname = usePathname();

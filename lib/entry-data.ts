@@ -1,5 +1,7 @@
 import { buttonEntry } from "@/registry/harv/button/button.entry";
 import { badgeEntry } from "@/registry/harv/badge/badge.entry";
+import { temporalThemeEntry } from "@/registry/harv/temporal-theme/temporal-theme.entry";
+import { proximityNavigationEntry } from "@/registry/harv/proximity-navigation/proximity-navigation.entry";
 import type { EntryData } from "./entry-types";
 
 // New-style entries register here. Legacy entries (meta only, in
@@ -8,6 +10,8 @@ import type { EntryData } from "./entry-types";
 const entries: Record<string, EntryData> = {
   button: buttonEntry,
   badge: badgeEntry,
+  "temporal-theme": temporalThemeEntry,
+  "proximity-navigation": proximityNavigationEntry,
 };
 
 export function getEntryData(slug: string): EntryData | undefined {

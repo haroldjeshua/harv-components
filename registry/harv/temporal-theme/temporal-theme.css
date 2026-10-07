@@ -1,0 +1,89 @@
+/* Temporal Theme demo surface (Lab 003).
+ *
+ * Scoped classes only — nothing here touches the global theme. The demo
+ * container carries one `temporal-light*` / `temporal-dark*` class plus an
+ * inline `--temporal-atmosphere` value from the resolver. Tune freely.
+ */
+
+.temporal-scope {
+  --temporal-bg: #fafaf9;
+  --temporal-fg: #1c1917;
+  --temporal-muted: #78716c;
+  --temporal-tint: transparent;
+  --temporal-tint-strength: 0;
+  --temporal-atmosphere: 0;
+
+  background-color: var(--temporal-bg);
+  color: var(--temporal-fg);
+  transition:
+    background-color 500ms ease,
+    color 500ms ease;
+}
+
+.temporal-light-warm {
+  --temporal-bg: #faf5ec;
+  --temporal-fg: #1c1917;
+  --temporal-muted: #8a7a63;
+  --temporal-tint: #d97706;
+  --temporal-tint-strength: 0.08;
+}
+
+.temporal-light-cool {
+  --temporal-bg: #f2f6fb;
+  --temporal-fg: #17202b;
+  --temporal-muted: #64748b;
+  --temporal-tint: #2563eb;
+  --temporal-tint-strength: 0.07;
+}
+
+.temporal-dark {
+  --temporal-bg: #0c0a09;
+  --temporal-fg: #e7e5e4;
+  --temporal-muted: #a8a29e;
+}
+
+.temporal-dark-warm {
+  --temporal-bg: #14100b;
+  --temporal-fg: #ede6da;
+  --temporal-muted: #a89c86;
+  --temporal-tint: #f59e0b;
+  --temporal-tint-strength: 0.1;
+}
+
+.temporal-dark-cool {
+  --temporal-bg: #0a0e14;
+  --temporal-fg: #e2e8f0;
+  --temporal-muted: #8fa0b3;
+  --temporal-tint: #60a5fa;
+  --temporal-tint-strength: 0.12;
+}
+
+/* Warm / cool wash. Strength stays low on purpose — the page should feel
+ * like a room, not a filter. */
+.temporal-tint {
+  background-color: var(--temporal-tint);
+  opacity: var(--temporal-tint-strength);
+  transition: opacity 500ms ease;
+}
+
+/* The atmosphere layer. Opacity is driven by `--temporal-atmosphere`
+ * (0 → 1 from the resolver); the gradient itself is deliberately quiet. */
+.temporal-atmosphere {
+  background:
+    radial-gradient(
+      120% 90% at 50% 0%,
+      var(--temporal-tint) 0%,
+      transparent 60%
+    ),
+    linear-gradient(to bottom, var(--temporal-tint), transparent 70%);
+  opacity: var(--temporal-atmosphere);
+  transition: opacity 600ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .temporal-scope,
+  .temporal-tint,
+  .temporal-atmosphere {
+    transition: none;
+  }
+}

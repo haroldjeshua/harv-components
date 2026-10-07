@@ -1,8 +1,10 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { validateEntryMeta, type EntryMeta } from "@/lib/entry-schema";
+import { validateEntryMeta, ENTRY_LAYER_ORDER, type EntryMeta } from "@/lib/entry-schema";
 import { buttonEntry } from "@/registry/harv/button/button.entry";
 import { badgeEntry } from "@/registry/harv/badge/badge.entry";
+import { temporalThemeEntry } from "@/registry/harv/temporal-theme/temporal-theme.entry";
+import { proximityNavigationEntry } from "@/registry/harv/proximity-navigation/proximity-navigation.entry";
 
 // Meta lives here for legacy entries (server-safe) and is being migrated to
 // colocated *.entry.tsx files (see buttonEntry). Each entry's COMPONENT lives
@@ -10,6 +12,8 @@ import { badgeEntry } from "@/registry/harv/badge/badge.entry";
 const rawMetas: Record<string, unknown>[] = [
   buttonEntry.meta as unknown as Record<string, unknown>,
   badgeEntry.meta as unknown as Record<string, unknown>,
+  temporalThemeEntry.meta as unknown as Record<string, unknown>,
+  proximityNavigationEntry.meta as unknown as Record<string, unknown>,
   {
     slug: "theme-toggle",
     name: "Theme toggle",
@@ -120,6 +124,14 @@ const metas: EntryMeta[] = rawMetas.map((m) => validateEntryMeta(m));
 
 export function getAllEntries(): EntryMeta[] {
   return [...metas].sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/** Entries in docs-reading order: layer groups first, alphabetical within. */
+export function getDocsOrder(): EntryMeta[] {
+  const rank = new Map(ENTRY_LAYER_ORDER.map((layer, i) => [layer, i]));
+  return [...metas].sort(
+    (a, b) => (rank.get(a.layer) ?? 99) - (rank.get(b.layer) ?? 99) || a.name.localeCompare(b.name),
+  );
 }
 
 export function getEntry(slug: string): EntryMeta | undefined {

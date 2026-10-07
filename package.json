@@ -9,9 +9,11 @@
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
     "registry:build": "node scripts/build-registry.mjs && shadcn build"
   },
   "dependencies": {
+    "@radix-ui/react-popover": "^1.2.0",
     "agentation": "^3.1.2",
     "clsx": "^2.1.1",
     "lucide-react": "^1.52.0",
@@ -33,7 +35,8 @@
     "eslint-config-next": "16.2.9",
     "shadcn": "^4.21.3",
     "tailwindcss": "^4",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.3"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

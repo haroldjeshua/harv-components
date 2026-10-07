@@ -19,6 +19,14 @@
   --radius-md: 10px;
   --radius-lg: 14px;
 
+  /* shadcn-compat aliases: registry items use standard token names.
+     They ride our monotone roles so installs preview correctly here;
+     adopters get real values via each item's cssVars. */
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-border: var(--border);
+  --color-accent: var(--surface-2);
+
   --spacing-tile: 1.5rem;
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);

@@ -1,4 +1,9 @@
-export type EntryLayer = "element" | "component" | "pattern";
+export type EntryLayer = "element" | "component" | "pattern" | "system";
+
+/** Layer order shared by the sidebar and prev/next navigation, so the docs
+ *  read in one consistent sequence. Kept here (no node imports) so client
+ *  components can use it. */
+export const ENTRY_LAYER_ORDER = ["element", "component", "pattern", "system"] as const;
 export type EntryStatus = "draft" | "stable";
 
 export interface EntryMeta {
@@ -23,7 +28,7 @@ export function validateEntryMeta(meta: Record<string, unknown>): EntryMeta {
       throw new Error(`Entry missing required field: ${key}`);
     }
   }
-  if (!["element", "component", "pattern"].includes(meta.layer as string)) {
+  if (!["element", "component", "pattern", "system"].includes(meta.layer as string)) {
     throw new Error(`Entry "${meta.slug}": invalid layer "${meta.layer}"`);
   }
   if (!["draft", "stable"].includes(meta.status as string)) {
