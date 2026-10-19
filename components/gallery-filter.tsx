@@ -5,6 +5,8 @@ import Link from "next/link";
 import { LayoutGrid, List, Type } from "lucide-react";
 import { Badge } from "@/registry/harv/badge/badge";
 import { Button } from "@/registry/harv/button/button";
+import { PreviewStage } from "@/components/entry-preview";
+import { getEntryPreview } from "@/lib/entry-previews";
 import type { EntryMeta } from "@/lib/entry-schema";
 
 type View = "grid" | "list" | "text";
@@ -92,18 +94,25 @@ export function GalleryFilter({ entries, readySlugs = [] }: { entries: EntryMeta
 
       {view === "grid" && (
         <ul className="mt-3 grid list-none grid-cols-1 items-stretch gap-4 p-0 sm:grid-cols-2 lg:grid-cols-3" aria-label="Entries">
-          {visible.map((e) => (
+          {visible.map((e) => {
+            const Preview = getEntryPreview(e.slug);
+            const label = `${e.name}, ${e.layer}, ${e.status}${ready.has(e.slug) ? ", installable via CLI" : ""}`;
+            return (
             <li
               key={e.slug}
-              className="flex transition-[border-color] duration-200 hover:[border-color:var(--fg-faint)] motion-reduce:transition-none"
+              className="group relative flex flex-col overflow-hidden transition-[border-color] duration-200 hover:[border-color:var(--fg-faint)] motion-reduce:transition-none"
               style={{ border: "1px solid var(--border)", borderRadius: "var(--radius-md)", background: "var(--surface)" }}
             >
-              <Link
-                href={`/docs/${e.slug}`}
-                aria-label={`${e.name}, ${e.layer}, ${e.status}${ready.has(e.slug) ? ", installable via CLI" : ""}`}
-                className="flex h-full w-full flex-col rounded-[inherit] p-5 no-underline focus-visible:outline-2"
-                style={{ color: "inherit" }}
-              >
+              <PreviewStage>
+                {Preview ? (
+                  <Preview />
+                ) : (
+                  <span aria-hidden="true" className="text-2xl font-semibold" style={{ color: "var(--fg-faint)" }}>
+                    {e.name.charAt(0)}
+                  </span>
+                )}
+              </PreviewStage>
+              <div className="flex flex-1 flex-col p-5">
                 <div className="flex items-center gap-2">
                   <Badge variant="secondary">{e.layer}</Badge>
                   <Badge variant="outline">{e.status}</Badge>
@@ -112,9 +121,15 @@ export function GalleryFilter({ entries, readySlugs = [] }: { entries: EntryMeta
                 <h2 className="mt-3 text-xl font-semibold">{e.name}</h2>
                 <p className="mt-1 line-clamp-2 text-sm leading-relaxed" style={{ color: "var(--fg-muted)" }}>{e.description}</p>
                 <p className="mt-auto pt-3 text-xs" style={{ color: "var(--fg-faint)" }}>origin: {e.origin}</p>
-              </Link>
+              </div>
+              <Link
+                href={`/docs/${e.slug}`}
+                aria-label={label}
+                className="absolute inset-0 rounded-[inherit] no-underline focus-visible:outline-2"
+              />
             </li>
-          ))}
+            );
+          })}
         </ul>
       )}
 
